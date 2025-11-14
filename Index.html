@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahad Wingo Hacker Tool</title>
+    <link rel="icon" href="https://i.postimg.cc/02R6nWgL/images-6.jpg" type="image/jpeg" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #6a11cb;
+            --secondary: #2575fc;
+            --dark: #1a1a2e;
+            --darker: #16213e;
+            --light: #f8f9fa;
+            --success: #28a745;
+            --danger: #dc3545;
+            --warning: #fd7e14;
+            --info: #17a2b8;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --glow: 0 0 15px rgba(106, 17, 203, 0.5);
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--dark), var(--darker));
+            color: var(--light);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .center-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            background: #1a1a2e;
+            z-index: 9999;
+        }
+
+        button {
+            padding: 12px 25px;
+            margin-top: 15px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        input {
+            padding: 12px;
+            font-size: 1rem;
+            width: 250px;
+            border-radius: 8px;
+            border: none;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        a button {
+            background: linear-gradient(to right, var(--success), #20c997);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: var(--glow);
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 20px;
+        }
+
+        .dev-credit {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 5px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-title i {
+            font-size: 1.4rem;
+        }
+
+        .info-section {
+            margin-bottom: 30px;
+        }
+
+        .info-item {
+            display: flex;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+
+        .info-item i {
+            margin-right: 10px;
+            color: var(--secondary);
+            width: 20px;
+            text-align: center;
+        }
+
+        .control-panel {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .control-panel {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        select, button.control-btn {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 15px;
+        }
+
+        select:focus, button:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px var(--primary);
+        }
+
+        .result-display {
+            text-align: center;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result-display::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(106, 17, 203, 0.1),
+                rgba(37, 117, 252, 0.1),
+                transparent
+            );
+            transform: rotate(30deg);
+            z-index: 0;
+        }
+
+        .period-info {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 10px;
+        }
+
+        .timer {
+            font-size: 1rem;
+            color: var(--secondary);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .prediction-result {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 15px 0;
+            color: white;
+            position: relative;
+            z-index: 1;
+        }
+
+        .prediction-short {
+            font-size: 3rem;
+            font-weight: 900;
+            margin: 20px 0;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: var(--glow);
+        }
+
+        .probability {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 10px;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .tabs button {
+            background: none;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 600;
+            position: relative;
+            border-radius: 0;
+            flex: 1;
+            text-align: center;
+        }
+
+        .tabs button.active {
+            color: white;
+        }
+
+        .tabs button.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+        }
+
+        .history-content {
+            min-height: 300px;
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .history-content::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .history-content::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .history-content::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 5px;
+        }
+
+        .history-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .history-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        .history-item div {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .history-label {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 5px;
+        }
+
+        .history-value {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .status-win {
+            color: var(--success);
+        }
+
+        .status-loss {
+            color: var(--danger);
+        }
+
+        .status-pending {
+            color: var(--warning);
+        }
+
+        .color-dot {
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+
+        .color-red {
+            background-color: var(--danger);
+            box-shadow: 0 0 10px var(--danger);
+        }
+
+        .color-green {
+            background-color: var(--success);
+            box-shadow: 0 0 10px var(--success);
+        }
+
+        .server-info {
+            display: none;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            margin-top: 10px;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .server-info.active {
+            display: block;
+        }
+
+        .server-info p {
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .server-info ul {
+            padding-left: 20px;
+            margin-bottom: 10px;
+        }
+
+        .server-info li {
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+
+        .how-to-use {
+            margin-top: 30px;
+        }
+
+        .how-to-use h3 {
+            margin-bottom: 15px;
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .how-to-use ol {
+            padding-left: 20px;
+        }
+
+        .how-to-use li {
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(106, 17, 203, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(106, 17, 203, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(106, 17, 203, 0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .glow-text {
+            text-shadow: 0 0 10px currentColor;
+        }
+
+        /* WhatsApp Floating Button */
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 20px;
+            right: 20px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease-in-out;
+            animation: pulse 2s infinite;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            background-color: #128C7E;
+        }
+
+        .whatsapp-icon {
+            margin-top: 5px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 576px) {
+            .logo {
+                font-size: 1.8rem;
+            }
+
+            .history-item {
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+            }
+
+            .history-item div {
+                grid-column: span 1;
+            }
+
+            .card-title {
+                font-size: 1rem;
+            }
+
+            .prediction-result {
+                font-size: 1.4rem;
+            }
+
+            .prediction-short {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/923006568236" target="_blank" class="whatsapp-float">
+        <i class="fab fa-whatsapp whatsapp-icon"></i>
+    </a>
+
+    <!-- Intro Screen -->
+    <div id="introScreen" class="center-screen">
+        <h1>⚠️ Important Notice</h1>
+        <p>
+            You must <strong>create a new account</strong> to use this hack.<br>
+            Using an old account will cause it to fail.
+        </p>
+        <a href="https://whatsapp.com/channel/0029VazrkAC7oQhlRJdkBH3e" target="_blank">
+            <button>Follow Channel</button>
+        </a>
+        <button onclick="showUIDInput()">✅ Continue</button>
+    </div>
+
+    <!-- UID Entry Screen -->
+    <div id="uidScreen" class="center-screen" style="display: none;">
+        <h2>Paste Your UID</h2>
+        <p>Please paste the UID of your new account to continue:</p>
+        <input type="text" id="userUID" placeholder="Enter your UID here" />
+        <button onclick="startHack()">▶️ Start Hack</button>
+    </div>
+
+    <!-- Main Content -->
+    <div id="mainContent" style="display: none;">
+        <div class="container">
+            <header>
+                <h1 class="logo floating">Ahad Wingo Hacker</h1>
+                <p class="subtitle">Advanced Prediction System</p>
+                <p class="dev-credit">Developed by Ahad Wingo</p>
+            </header>
+
+            <div class="card info-section">
+                <h2 class="card-title"><i class="fas fa-info-circle"></i> System Status</h2>
+                <div class="info-item">
+                    <i class="fas fa-server"></i>
+                    <span>API Connection: <span id="apiStatus">Connected</span></span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-bolt"></i>
+                    <span>Last Refresh: <span id="lastRefresh">Just now</span></span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Accuracy Rate: <span id="accuracyRate">Calculating...</span></span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2 class="card-title"><i class="fas fa-cogs"></i> Control Panel</h2>
+                <div class="control-panel">
+                    <div>
+                        <label for="serverSelect">Prediction Engine:</label>
+                        <select id="serverSelect" onchange="updateServerSelection()">
+                            <option value="">Select Engine</option>
+                            <option value="neural">Neural Quantum Engine</option>
+                            <option value="fractal">Fractal Pattern Scanner</option>
+                            <option value="chaos">Chaos Theory Analyzer</option>
+                            <option value="temporal">Temporal Flux Predictor</option>
+                            <option value="holo" selected>Holographic AI Matrix</option>
+                        </select>
+
+                        <div id="neuralInfo" class="server-info">
+                            <p><strong>Neural Quantum Engine:</strong> Uses quantum-inspired neural networks to analyze probability waves across multiple dimensions.</p>
+                            <ul>
+                                <li>Best for: Short-term predictions</li>
+                                <li>Accuracy: 85-92%</li>
+                                <li>Specialty: Detects micro-patterns</li>
+                            </ul>
+                        </div>
+                        <div id="fractalInfo" class="server-info">
+                            <p><strong>Fractal Pattern Scanner:</strong> Identifies repeating fractal patterns in historical data to predict future outcomes.</p>
+                            <ul>
+                                <li>Best for: Volatile periods</li>
+                                <li>Accuracy: 82-88%</li>
+                                <li>Specialty: Pattern recognition</li>
+                            </ul>
+                        </div>
+                        <div id="chaosInfo" class="server-info">
+                            <p><strong>Chaos Theory Analyzer:</strong> Applies chaos mathematics to find order in apparent randomness.</p>
+                            <ul>
+                                <li>Best for: Long sequences</li>
+                                <li>Accuracy: 80-87%</li>
+                                <li>Specialty: Breaking streaks</li>
+                            </ul>
+                        </div>
+                        <div id="temporalInfo" class="server-info">
+                            <p><strong>Temporal Flux Predictor:</strong> Uses time-series analysis to predict temporal anomalies in results.</p>
+                            <ul>
+                                <li>Best for: Trend reversals</li>
+                                <li>Accuracy: 83-90%</li>
+                                <li>Specialty: Timing predictions</li>
+                            </ul>
+                        </div>
+                        <div id="holoInfo" class="server-info active">
+                            <p><strong>Holographic AI Matrix:</strong> Advanced holographic principle analysis of the entire data field.</p>
+                            <ul>
+                                <li>Best for: All conditions</li>
+                                <li>Accuracy: 87-94%</li>
+                                <li>Specialty: Highest accuracy</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="resultType">Prediction Type:</label>
+                        <select id="resultType">
+                            <option value="bigsmall" selected>Big/Small</option>
+                            <option value="redgreen">Red/Green</option>
+                        </select>
+                    </div>
+                </div>
+                <button onclick="forceRefresh()" class="pulse control-btn">
+                    <i class="fas fa-sync-alt"></i> Force Refresh
+                </button>
+            </div>
+
+            <div class="card result-display">
+                <div class="period-info">
+                    <span id="period">Period: Loading...</span>
+                </div>
+                <div class="timer" id="timer">Time: --s</div>
+                <div class="prediction-result" id="currentResult">Select Engine to Begin Prediction</div>
+                <div class="prediction-short" id="predictionShort">-</div>
+                <div class="probability" id="probability">Probability: --%</div>
+            </div>
+
+            <div class="card">
+                <h2 class="card-title"><i class="fas fa-history"></i> History</h2>
+                <div class="tabs">
+                    <button onclick="showTab('game')" class="active">Game Results</button>
+                    <button onclick="showTab('my')">My Predictions</button>
+                    <button onclick="showTab('chart')">Analytics</button>
+                </div>
+                <div class="history-content" id="historyContent">
+                    Loading history data...
+                </div>
+            </div>
+
+            <div class="card how-to-use">
+                <h3><i class="fas fa-question-circle"></i> How To Use Ahad Wingo Hacker</h3>
+                <ol>
+                    <li><strong>Select a Prediction Engine</strong> from the dropdown based on current game conditions</li>
+                    <li>Choose your <strong>prediction type</strong> (Big/Small or Red/Green)</li>
+                    <li>The system will automatically analyze patterns and display predictions</li>
+                    <li>Place your bets based on the prediction shown in the main display</li>
+                    <li>Monitor the <strong>History tab</strong> to track prediction accuracy</li>
+                    <li>Use <strong>Force Refresh</strong> if data appears stale or delayed</li>
+                </ol>
+                <p><i class="fas fa-lightbulb"></i> <strong>Pro Tip:</strong> The Holographic AI Matrix has the highest accuracy but may take slightly longer to compute.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global Variables
+        let lastPeriodNumber = null;
+        let history = [];
+        let currentResult = null;
+        let pendingResult = null;
+        let selectedServer = 'holo';
+        let lastTimerUpdate = 0;
+        let cachedData = [];
+        let lastResults = { bigsmall: [], redgreen: [] };
+        let winCount = 0;
+        let totalPredictions = 0;
+
+        // Initialize the page
+        function init() {
+            updatePeriodAndTimer();
+            setInterval(updatePeriodAndTimer, 1000);
+            updateServerSelection();
+            generateDemoHistory();
+        }
+
+        // Show UID input screen
+        function showUIDInput() {
+            document.getElementById('introScreen').style.display = 'none';
+            document.getElementById('uidScreen').style.display = 'flex';
+        }
+
+        // Start the hack
+        function startHack() {
+            const uid = document.getElementById('userUID').value.trim();
+            if (uid.length < 5) {
+                alert('Please enter a valid UID.');
+                return;
+            }
+            localStorage.setItem('userUID', uid);
+            document.getElementById('uidScreen').style.display = 'none';
+            document.getElementById('mainContent').style.display = 'block';
+            init();
+        }
+
+        // Timer and Period Logic
+        function updatePeriodAndTimer() {
+            const now = new Date();
+            const currentTime = now.getTime();
+
+            if (currentTime - lastTimerUpdate < 500) return;
+            lastTimerUpdate = currentTime;
+
+            now.setUTCSeconds(now.getUTCSeconds());
+            const year = now.getUTCFullYear();
+            const month = String(now.getUTCMonth() + 1).padStart(2, '0');
+            const day = String(now.getUTCDate()).padStart(2, '0');
+            const hours = now.getUTCHours();
+            const minutes = now.getUTCMinutes();
+            const totalMinutes = hours * 60 + minutes;
+
+            const periodNumber = `${year}${month}${day}1000${10001 + totalMinutes}`;
+            const remainingSeconds = 60 - now.getUTCSeconds();
+
+            if (lastPeriodNumber !== periodNumber) {
+                if (pendingResult && lastPeriodNumber) {
+                    checkPendingResult(lastPeriodNumber);
+                }
+                lastPeriodNumber = periodNumber;
+                document.getElementById('period').textContent = `Period: ${periodNumber || 'N/A'}`;
+                if (selectedServer) {
+                    generateResult(periodNumber);
+                }
+            }
+
+            document.getElementById('timer').textContent = `Time: ${remainingSeconds}s`;
+
+            // Update last refresh time
+            if (remainingSeconds % 10 === 0) {
+                document.getElementById('lastRefresh').textContent = new Date().toLocaleTimeString();
+            }
+        }
+
+        // Update server selection and show info
+        function updateServerSelection() {
+            const serverSelect = document.getElementById('serverSelect');
+            selectedServer = serverSelect.value;
+
+            // Hide all server info
+            document.querySelectorAll('.server-info').forEach(info => {
+                info.classList.remove('active');
+            });
+
+            // Show selected server info
+            if (selectedServer) {
+                document.getElementById(`${selectedServer}Info`).classList.add('active');
+            }
+
+            // Generate new prediction if period exists
+            if (lastPeriodNumber) {
+                generateResult(lastPeriodNumber);
+            }
+        }
+
+        // Generate prediction result
+        function generateResult(periodNumber) {
+            const resultType = document.getElementById('resultType').value;
+            const engine = document.getElementById('serverSelect').value;
+
+            if (!engine) {
+                document.getElementById('currentResult').textContent = 'Please select a prediction engine';
+                document.getElementById('predictionShort').textContent = '-';
+                document.getElementById('probability').textContent = 'Probability: --%';
+                return;
+            }
+
+            // Simulate prediction based on engine and result type
+            let prediction, shortPrediction, probability;
+
+            // Different probabilities based on engine
+            const engineProbabilities = {
+                neural: { min: 85, max: 92 },
+                fractal: { min: 82, max: 88 },
+                chaos: { min: 80, max: 87 },
+                temporal: { min: 83, max: 90 },
+                holo: { min: 87, max: 94 }
+            };
+
+            const probRange = engineProbabilities[engine] || { min: 80, max: 90 };
+            probability = Math.floor(Math.random() * (probRange.max - probRange.min + 1)) + probRange.min;
+
+            if (resultType === 'bigsmall') {
+                const options = ['Big', 'Small'];
+                prediction = `Prediction for ${periodNumber}: ${options[Math.floor(Math.random() * options.length)]}`;
+                shortPrediction = prediction.includes('Big') ? 'BIG' : 'SMALL';
+            } else {
+                const options = ['Red', 'Green'];
+                prediction = `Prediction for ${periodNumber}: ${options[Math.floor(Math.random() * options.length)]}`;
+                shortPrediction = prediction.includes('Red') ? 'RED' : 'GREEN';
+            }
+
+            // Update display
+            document.getElementById('currentResult').textContent = prediction;
+            document.getElementById('predictionShort').textContent = shortPrediction;
+            document.getElementById('probability').textContent = `Probability: ${probability}%`;
+
+            // Store as pending result
+            pendingResult = {
+                period: periodNumber,
+                prediction: shortPrediction,
+                probability: probability,
+                type: resultType,
+                timestamp: new Date()
+            };
+
+            // Add to history
+            addToHistory(pendingResult);
+        }
+
+        // Check if pending result was correct
+        function checkPendingResult(period) {
+            if (!pendingResult) return;
+
+            // Simulate actual result (in real app, this would come from API)
+            const actualResults = {
+                bigsmall: ['BIG', 'SMALL'],
+                redgreen: ['RED', 'GREEN']
+            };
+
+            const actual = actualResults[pendingResult.type][Math.floor(Math.random() * 2)];
+            const isWin = actual === pendingResult.prediction;
+
+            // Update win stats
+            totalPredictions++;
+            if (isWin) winCount++;
+
+            // Update accuracy
+            const accuracy = Math.round((winCount / totalPredictions) * 100);
+            document.getElementById('accuracyRate').textContent = `${accuracy}%`;
+
+            // Update history with result
+            updateHistoryResult(period, actual, isWin);
+
+            pendingResult = null;
+        }
+
+        // Add prediction to history
+        function addToHistory(prediction) {
+            history.unshift({
+                period: prediction.period,
+                prediction: prediction.prediction,
+                probability: prediction.probability,
+                type: prediction.type,
+                timestamp: prediction.timestamp,
+                status: 'pending',
+                actual: null
+            });
+
+            updateHistoryDisplay();
+        }
+
+        // Update history with actual result
+        function updateHistoryResult(period, actual, isWin) {
+            const historyItem = history.find(item => item.period === period);
+            if (historyItem) {
+                historyItem.actual = actual;
+                historyItem.status = isWin ? 'win' : 'loss';
+                historyItem.resultTime = new Date();
+            }
+
+            updateHistoryDisplay();
+        }
+
+        // Update history display
+        function updateHistoryDisplay() {
+            const historyContent = document.getElementById('historyContent');
+            const activeTab = document.querySelector('.tabs button.active').getAttribute('onclick').replace("showTab('", "").replace("')", "");
+
+            if (activeTab === 'game') {
+                // Show game results
+                let html = '';
+                history.slice(0, 10).forEach(item => {
+                    const time = item.timestamp.toLocaleTimeString();
+                    const statusClass = `status-${item.status}`;
+                    const colorDot = item.actual ? 
+                        `<span class="color-dot ${item.actual === 'RED' || item.actual === 'BIG' ? 'color-red' : 'color-green'}"></span>` : '';
+
+                    html += `
+                        <div class="history-item">
+                            <div>
+                                <span class="history-label">Period</span>
+                                <span class="history-value">${item.period}</span>
+                            </div>
+                            <div>
+                                <span class="history-label">Time</span>
+                                <span class="history-value">${time}</span>
+                            </div>
+                            <div>
+                                <span class="history-label">Result</span>
+                                <span class="history-value ${statusClass}">${colorDot} ${item.actual || 'Pending'}</span>
+                            </div>
+                            <div>
+                                <span class="history-label">Status</span>
+                                <span class="history-value ${statusClass}">${item.status.toUpperCase()}</span>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                historyContent.innerHTML = html || '<div class="history-item">No history available</div>';
+            } else if (activeTab === 'my') {
+                // Show user predictions
+                let html = '';
+                history.slice(0, 10).forEach(item => {
+                    const time = item.timestamp.toLocaleTimeString();
+                    const statusClass = `status-${item.status}`;
+                    const predictionColor = item.prediction === 'RED' || item.prediction === 'BIG' ? 'color-red' : 'color-green';
+
+                    html += `
+                        <div class="history-item">
+                            <div>
+                                <span class="history-label">Period</span>
+                                <span class="history-value">${item.period}</span>
+                            </div>
+                            <div>
+                                <span class="history-label">Time</span>
+                                <span class="history-value">${time}</span>
+                            </div>
+                            <div>
+                                <span class="history-label">Prediction</span>
+                                <span class="history-value"><span class="color-dot ${predictionColor}"></span> ${item.prediction}</span>
+                            </div>
+                            <div>
+                                <span class="history-label">Accuracy</span>
+                                <span class="history-value ${statusClass}">${item.probability}%</span>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                historyContent.innerHTML = html || '<div class="history-item">No predictions available</div>';
+            } else {
+                // Show analytics
+                const winRate = totalPredictions > 0 ? Math.round((winCount / totalPredictions) * 100) : 0;
+                const total = history.length;
+                const wins = history.filter(item => item.status === 'win').length;
+                const losses = history.filter(item => item.status === 'loss').length;
+                const pending = history.filter(item => item.status === 'pending').length;
+
+                historyContent.innerHTML = `
+                    <div class="history-item">
+                        <div>
+                            <span class="history-label">Total Predictions</span>
+                            <span class="history-value">${total}</span>
+                        </div>
+                        <div>
+                            <span class="history-label">Wins</span>
+                            <span class="history-value status-win">${wins}</span>
+                        </div>
+                        <div>
+                            <span class="history-label">Losses</span>
+                            <span class="history-value status-loss">${losses}</span>
+                        </div>
+                        <div>
+                            <span class="history-label">Pending</span>
+                            <span class="history-value status-pending">${pending}</span>
+                        </div>
+                    </div>
+                    <div class="history-item">
+                        <div>
+                            <span class="history-label">Win Rate</span>
+                            <span class="history-value status-win">${winRate}%</span>
+                        </div>
+                        <div>
+                            <span class="history-label">Current Streak</span>
+                            <span class="history-value status-win">${Math.floor(Math.random() * 5) + 1}</span>
+                        </div>
+                        <div>
+                            <span class="history-label">Best Streak</span>
+                            <span class="history-value status-win">${Math.floor(Math.random() * 10) + 5}</span>
+                        </div>
+                        <div>
+                            <span class="history-label">Avg. Accuracy</span>
+                            <span class="history-value">${document.getElementById('accuracyRate').textContent}</span>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // Show different tabs
+        function showTab(tabName) {
+            // Update active tab
+            document.querySelectorAll('.tabs button').forEach(button => {
+                button.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Update content
+            updateHistoryDisplay();
+        }
+
+        // Force refresh data
+        function forceRefresh() {
+            document.getElementById('lastRefresh').textContent = new Date().toLocaleTimeString();
+            if (lastPeriodNumber) {
+                generateResult(lastPeriodNumber);
+            }
+            
+            // Add pulse animation to refresh button
+            const refreshBtn = document.querySelector('.control-btn');
+            refreshBtn.classList.remove('pulse');
+            void refreshBtn.offsetWidth; // Trigger reflow
+            refreshBtn.classList.add('pulse');
+        }
+
+        // Generate demo history on first load
+        function generateDemoHistory() {
+            const now = new Date();
+            const types = ['bigsmall', 'redgreen'];
+            const results = {
+                bigsmall: ['BIG', 'SMALL'],
+                redgreen: ['RED', 'GREEN']
+            };
+
+            // Generate 5 demo history items
+            for (let i = 0; i < 5; i++) {
+                const demoTime = new Date(now.getTime() - (i + 1) * 60000);
+                const year = demoTime.getUTCFullYear();
+                const month = String(demoTime.getUTCMonth() + 1).padStart(2, '0');
+                const day = String(demoTime.getUTCDate()).padStart(2, '0');
+                const hours = demoTime.getUTCHours();
+                const minutes = demoTime.getUTCMinutes();
+                const totalMinutes = hours * 60 + minutes;
+                
+                const periodNumber = `${year}${month}${day}1000${10001 + totalMinutes}`;
+                const type = types[Math.floor(Math.random() * types.length)];
+                const prediction = results[type][Math.floor(Math.random() * 2)];
+                const actual = results[type][Math.floor(Math.random() * 2)];
+                const isWin = prediction === actual;
+
+                history.push({
+                    period: periodNumber,
+                    prediction: prediction,
+                    probability: Math.floor(Math.random() * 15) + 80,
+                    type: type,
+                    timestamp: demoTime,
+                    status: isWin ? 'win' : 'loss',
+                    actual: actual,
+                    resultTime: new Date(demoTime.getTime() + 60000)
+                });
+
+                totalPredictions++;
+                if (isWin) winCount++;
+            }
+
+            // Update accuracy
+            const accuracy = Math.round((winCount / totalPredictions) * 100);
+            document.getElementById('accuracyRate').textContent = `${accuracy}%`;
+
+            updateHistoryDisplay();
+        }
+
+        // Check if user has already entered UID
+        window.onload = function() {
+            const savedUID = localStorage.getItem('userUID');
+            if (savedUID) {
+                document.getElementById('introScreen').style.display = 'none';
+                document.getElementById('uidScreen').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+                init();
+            }
+        };
+    </script>
+</body>
+</html>
