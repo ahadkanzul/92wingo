@@ -1,0 +1,93 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ahad Wingo Hacker</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    body {
+      background: #0c0f1a;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      margin: 0;
+    }
+    header {
+      text-align: center;
+      padding: 20px;
+      background: linear-gradient(to right, #6a11cb, #2575fc);
+    }
+    h1 {
+      margin: 0;
+    }
+    .container {
+      padding: 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+    .card {
+      background: rgba(255,255,255,0.05);
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      backdrop-filter: blur(10px);
+    }
+    button {
+      padding: 12px 20px;
+      background: linear-gradient(to right, #6a11cb, #2575fc);
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      cursor: pointer;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Ahad Wingo Hacker Tool</h1>
+    <p>Advanced Prediction & Analysis Engine</p>
+  </header>  <div class="container">
+    <div class="card">
+      <h2><i class="fas fa-user-secret"></i> Enter UID</h2>
+      <input type="text" id="uid" placeholder="Enter your UID" style="width: 100%; padding: 12px; border-radius: 8px; border: none; margin-top: 10px;" />
+      <button onclick="startWingo()">Start</button>
+    </div><div class="card">
+  <h2><i class="fas fa-brain"></i> Prediction Engine</h2>
+  <p>Select Engine:</p>
+  <select id="engine" style="width:100%; padding:12px; border-radius:8px;">
+    <option value="neural">Neural Engine</option>
+    <option value="fractal">Fractal Scanner</option>
+    <option value="chaos">Chaos Analyzer</option>
+    <option value="holo" selected>Holographic AI</option>
+  </select>
+  <button style="margin-top:15px;" onclick="generatePrediction()">Generate Prediction</button>
+</div>
+
+<div class="card">
+  <h2><i class="fas fa-bolt"></i> Result Output</h2>
+  <div id="result">Waiting for input...</div>
+</div>
+
+  </div>  <script>
+    function startWingo() {
+      let uid = document.getElementById("uid").value;
+      if (uid.length < 5) {
+        alert("Please enter a valid UID.");
+        return;
+      }
+      alert("UID saved! You can now generate predictions.");
+    }
+
+    function generatePrediction() {
+      let engine = document.getElementById("engine").value;
+      let output = "";
+
+      if (engine === "neural") output = "Neural Engine Predicts: GREEN | 92%";
+      if (engine === "fractal") output = "Fractal Scanner Predicts: RED | 88%";
+      if (engine === "chaos") output = "Chaos Analyzer Predicts: GREEN | 85%";
+      if (engine === "holo") output = "Holographic AI Predicts: RED | 94%";
+
+      document.getElementById("result").innerText = output;
+    }
+  </script></body>
+</html>
